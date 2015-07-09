@@ -43,7 +43,15 @@ plot(lag, corr)
 
 
 % Try to only keep data which are correlated
+% (naive first attempt)
+[maxval, imax] = max(real(corr))
+selection = zeros(1, 2*N - 1);
+selection(imax) = maxval;
+selection_fft = fft(selection);
 
-figure;
-title("Correlation function");
-plot(lag, corr)
+aaa = [ft_a; ft_b] .* ([1; 1] * sqrt(selection_fft ./ ftprod));
+ft_a2 = aaa(1, 1:end);
+ft_b2 = aaa(2, 1:end);
+
+
+
